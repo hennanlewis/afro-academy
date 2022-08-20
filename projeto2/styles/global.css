@@ -1,0 +1,52 @@
+:root {
+	--background: #fff;
+	--primary: #4f3acf;
+	--secondary: #0c2026;
+	--text: #5f5f5f;
+	--text-secondary: #c1c1c1;
+	--border: #b8b8b8;
+	--link: #333;
+
+	scroll-behavior: smooth;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+	text-transform: none;
+	transition: all 200ms ease-in-out;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+}
+
+main {
+	max-width: calc(1136px + 2rem);
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+section {
+	padding: 4.5rem 0;
+}
+
+h2 {
+	font-size: 3rem;
+	color: var(--secondary);
+}
+
+h2 span {
+	color: var(--primary);
+}
+
+p {
+	color: var(--text);
+}
+
+footer {
+	display: flex;
+	justify-content: center;
+}

@@ -1,0 +1,42 @@
+.contato {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.contatos {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.button {
+	display: flex;
+	flex: auto;
+	justify-content: center;
+	align-items: center;
+	width: 15rem;
+	padding: 0.5rem 1rem;
+	color: var(--background);
+	font-weight: 500;
+	border-radius: 2px;
+	gap: 0.5rem;
+}
+
+.button.linkedin:hover,
+.button.github:hover,
+.button.gmail:hover {
+	filter: brightness(1.25);
+}
+
+.button.linkedin {
+	background: #0e76a8;
+}
+
+.button.github {
+	background: #171515;
+}
+
+.button.gmail {
+	background: #ea4335;
+}

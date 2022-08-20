@@ -1,0 +1,60 @@
+.saudacao {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 4.5rem 0;
+}
+
+.dec-info {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+.dec-info .descricao {
+	max-width: 28rem;
+	color: var(--text);
+	font-size: 1.2rem;
+}
+
+.saudacao .button {
+	background-color: var(--primary);
+	color: var(--background);
+	width: 15rem;
+	padding: 1rem;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.saudacao .button:hover {
+	filter: brightness(1.25);
+}
+
+.saudacao .imagem {
+	background-color: var(--secondary);
+	border-radius: 10px;
+	transform: rotate(4deg);
+	filter: drop-shadow(0 0 5px var(--secondary));
+}
+
+.imagem img {
+	width: 21rem;
+	border-radius: 10px;
+	transform: rotate(-8deg);
+}
+
+.saudacao .imagem:hover,
+.imagem img:hover {
+	transform: rotate(0);
+}
+
+@media (max-width: 768px) {
+	.saudacao .imagem {
+		display: none;
+	}
+
+	.dec-info {
+		align-items: center;
+		text-align: center;
+	}
+}

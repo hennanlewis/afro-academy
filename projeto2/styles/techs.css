@@ -1,0 +1,49 @@
+.lista-techs {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 2rem;
+}
+
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin-top: 3rem;
+	padding: 2rem 1.5rem 3rem;
+	border: 1px solid var(--border);
+	border-radius: 1rem;
+	gap: 2rem;
+}
+
+.card:hover {
+	background: var(--primary);
+	transform: translateY(-2rem);
+}
+
+.card h3 {
+	font-size: 1.5rem;
+}
+
+.card:hover h3,
+.card:hover p {
+	color: var(--background);
+}
+
+.card img {
+	position: absolute;
+	width: 4rem;
+	top: -1.5rem;
+	right: -1rem;
+}
+
+@media (max-width: 480px) {
+	.lista-techs {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.lista-techs {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
