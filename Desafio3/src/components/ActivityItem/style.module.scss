@@ -1,0 +1,104 @@
+@import "../../styles/colors";
+
+.activity,
+.editingActivity {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	border: 2px solid $green-100;
+	transition: all 200ms;
+
+	&:hover {
+		border: 2px solid $green-300;
+		transform: scale(102%);
+	}
+
+	.todoOptions {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		width: 100%;
+
+		label {
+			flex: 1;
+			display: flex;
+			align-items: flex-start;
+			gap: 1rem;
+
+			span {
+				font-size: 14px;
+
+				&.concluded {
+					color: $gray-500;
+					text-decoration: line-through;
+				}
+			}
+		}
+
+		button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 32px;
+			aspect-ratio: 1/1;
+			border: none;
+			border-radius: 0.5rem;
+			background: none;
+		}
+
+		.deleteButton:hover {
+			background: $gray-100;
+			transition-duration: 200ms;
+
+			svg {
+				fill: $red-400;
+				transition-duration: 200ms;
+			}
+		}
+
+		.editButton:hover {
+			background: $gray-100;
+			transition-duration: 200ms;
+
+			svg {
+				fill: $green-300;
+				transition-duration: 100ms;
+			}
+		}
+	}
+
+	.todoDate {
+		display: flex;
+		align-self: flex-end;
+		gap: 2rem;
+
+		.concludedDate {
+			display: flex;
+			gap: 0.5rem;
+		}
+
+		.limiteDate {
+			display: flex;
+			gap: 0.5rem;
+		}
+	}
+}
+
+.editingActivity {
+	border: 2px solid $green-300;
+	transform: scale(105%);
+
+	&:hover {
+		border: 2px solid $green-300;
+		transform: scale(105%);
+	}
+
+	.editButton {
+		svg {
+			fill: $green-300;
+		}
+	}
+}
