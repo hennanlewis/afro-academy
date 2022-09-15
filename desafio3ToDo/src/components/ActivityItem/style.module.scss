@@ -7,6 +7,7 @@
 	flex-direction: column;
 	gap: 1.25rem;
 	padding: 1rem;
+	background-color: $white;
 	border-radius: 0.5rem;
 	border: 2px solid $green-100;
 	transition: all 200ms;
@@ -18,9 +19,7 @@
 
 	.todoOptions {
 		display: flex;
-		align-items: flex-start;
 		gap: 1rem;
-		width: 100%;
 
 		label {
 			flex: 1;
@@ -30,6 +29,7 @@
 
 			span {
 				font-size: 14px;
+				word-break: break-all;
 
 				&.concluded {
 					color: $gray-500;
@@ -80,7 +80,7 @@
 			gap: 0.5rem;
 		}
 
-		.limiteDate {
+		.deadline {
 			display: flex;
 			gap: 0.5rem;
 		}

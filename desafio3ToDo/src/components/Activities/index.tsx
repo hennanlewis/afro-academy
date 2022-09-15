@@ -1,9 +1,9 @@
-import { ActivitiesStateProps } from "../../utils/Types"
+import { TaskStateProps } from "../../@types/types"
 import todoLine from "../../assets/TodoLine.svg"
 import { ActivityItem } from "../ActivityItem"
 import style from "./style.module.scss"
 
-export const Activities = (props: ActivitiesStateProps) => {
+export const Activities = (props: TaskStateProps) => {
 	const { listArray, setListArray } = props
 
 	return (

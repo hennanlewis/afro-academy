@@ -1,51 +1,50 @@
-import { ChangeEvent, FocusEvent, useEffect, useState } from "react"
+import { ChangeEvent, FocusEvent, FormEvent, useEffect, useState } from "react"
 
-import { ActivitiesStateProps, activityDefaultValue } from "../../utils/Types"
+import { activityDefaultValue } from "../../utils/defaultValues"
+import { TaskStateProps } from "../../@types/types"
+import { Edit } from "../IconsComponents/Edit"
 import plus from "../../assets/plus.svg"
 import style from "./style.module.scss"
-import { Edit } from "../IconsComponents/Edit"
+import { dateFormater } from "../../utils/dateFormater"
+import { localTasks } from "../../utils/localTasks"
 
-export const AddButton = (props: ActivitiesStateProps) => {
+export const AddButton = (props: TaskStateProps) => {
 	const { listArray, setListArray } = props
+
 	const [activity, setActivity] = useState({ ...activityDefaultValue })
+	const [formatedDate, setFormatedDate] = useState("")
 
 	const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
 		event.target.type = "date"
+		setFormatedDate(() => dateFormater("US", activity.deadline))
 	}
 
 	const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-		if (event.target.value === "") {
-			event.target.type = "text"
-			return
-		}
-
 		event.target.type = "text"
-		setActivity((value) => {
-			value = {
-				...value,
-				limiteDate: new Date(event.target.value).toLocaleDateString("pt-BR"),
-			}
-			return { ...value }
-		})
+		setFormatedDate(() => dateFormater("BR", activity.deadline))
 	}
 
-	const handleAddActivity = () => {
+	const handleAddActivity = (event: FormEvent) => {
+		event.preventDefault()
+
 		if (activity.task) {
-			setListArray((value) => {
-				let isEditingPosition = value.reduce((acc, item, index) => {
+			setListArray((values) => {
+				let isEditingPosition = values.reduce((acc, item, index) => {
 					acc = item.isEditing ? index : acc
 					return acc
 				}, -1)
 
 				if (isEditingPosition !== -1) {
-					value[isEditingPosition] = { ...activity, isEditing: false }
-					return [...value]
+					values[isEditingPosition] = { ...activity, isEditing: false }
+
+					return [...values]
 				}
 
-				return [...value, activity]
+				return [...values, activity]
 			})
 
 			setActivity(() => activityDefaultValue)
+			setFormatedDate("")
 		}
 	}
 
@@ -58,15 +57,15 @@ export const AddButton = (props: ActivitiesStateProps) => {
 	const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.value) {
 			setActivity((value) => {
-				return { ...value, hasLimiteDate: true, limiteDate: event.target.value }
+				return {
+					...value,
+					deadline: new Date(event.target.value),
+				}
 			})
+			setFormatedDate(() => event.target.value)
 
 			return
 		}
-
-		setActivity((value) => {
-			return { ...value, hasLimiteDate: false }
-		})
 	}
 
 	useEffect(() => {
@@ -75,11 +74,19 @@ export const AddButton = (props: ActivitiesStateProps) => {
 			setActivity(isEditing)
 			return
 		}
+
+		if (listArray.length) {
+			localTasks
+				.setItem("@AfroToDo:tasks", JSON.stringify([...listArray]))
+				.then(() => console.log("Tarefas atualizadas com sucesso"))
+				.catch((error) => console.log(error))
+		}
+
 		setActivity(activityDefaultValue)
 	}, [listArray])
 
 	return (
-		<div className={style.addButton}>
+		<form className={style.addButton} onSubmit={handleAddActivity}>
 			<input
 				type="text"
 				onChange={handleTask}
@@ -94,13 +101,13 @@ export const AddButton = (props: ActivitiesStateProps) => {
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					placeholder="Insira a data limite para a atividade"
-					value={activity.limiteDate}
+					value={formatedDate}
 				/>
 
-				<button onClick={handleAddActivity}>
+				<button type="submit">
 					{activity.isEditing ? <Edit big={true} /> : <img src={plus} alt="" />}
 				</button>
 			</span>
-		</div>
+		</form>
 	)
 }

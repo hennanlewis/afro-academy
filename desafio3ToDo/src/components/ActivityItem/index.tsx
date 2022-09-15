@@ -1,29 +1,30 @@
-import { Dispatch, SetStateAction, ChangeEvent, useEffect, useRef } from "react"
+import { Dispatch, SetStateAction, ChangeEvent } from "react"
 
 import { Delete } from "../IconsComponents/Delete"
-import { ActivityType } from "../../utils/Types"
+import { Task } from "../../@types/types"
+import { Edit } from "../IconsComponents/Edit"
+
 import calendar from "../../assets/calendar.svg"
 import complete from "../../assets/complete.svg"
-import { Edit } from "../IconsComponents/Edit"
 import style from "./style.module.scss"
+import { dateFormater } from "../../utils/dateFormater"
+import { localTasks } from "../../utils/localTasks"
 
 type ActivityItemProps = {
-	setListArray: Dispatch<SetStateAction<ActivityType[]>>
-	listItem: ActivityType
+	setListArray: Dispatch<SetStateAction<Task[]>>
+	listItem: Task
 	arrayPosition: number
 }
 
 export const ActivityItem = (props: ActivityItemProps) => {
 	const { arrayPosition, listItem, setListArray } = props
 
-	const inputRef = useRef<HTMLInputElement>(null)
-
 	const handleIsConsluded = (event: ChangeEvent<HTMLInputElement>) => {
 		setListArray((values) => {
 			values[arrayPosition] = {
 				...listItem,
 				isConcluded: event.target.checked,
-				concludedDate: String(new Date()),
+				concludedDate: new Date(),
 			}
 
 			return [...values]
@@ -50,13 +51,14 @@ export const ActivityItem = (props: ActivityItemProps) => {
 	const handleDeleteActivity = () => {
 		setListArray((values) => {
 			values = values.filter((item, index) => index != arrayPosition)
+
+			localTasks
+				.setItem("@AfroToDo:tasks", JSON.stringify([...values]))
+				.catch((error) => console.log(error))
+
 			return values
 		})
 	}
-
-	useEffect(() => {
-		if (inputRef.current) inputRef.current.checked = listItem.isConcluded
-	}, [])
 
 	return (
 		<>
@@ -68,7 +70,7 @@ export const ActivityItem = (props: ActivityItemProps) => {
 						<input
 							type="checkbox"
 							onChange={(event) => handleIsConsluded(event)}
-							ref={inputRef}
+							checked={listItem.isConcluded}
 						/>
 
 						<span className={listItem.isConcluded ? style.concluded : ""}>
@@ -90,19 +92,15 @@ export const ActivityItem = (props: ActivityItemProps) => {
 						<span className={style.concludedDate}>
 							<img src={complete} alt="" />
 							<span>Finalizado em</span>
-							<span>
-								{new Date(listItem.concludedDate).toLocaleDateString("pt-BR")}
-							</span>
+							<span>{dateFormater("BR", listItem.concludedDate)}</span>
 						</span>
 					)}
 
-					{listItem.hasLimiteDate && (
-						<span className={style.limiteDate}>
+					{listItem.deadline && (
+						<span className={style.deadline}>
 							<img src={calendar} alt="" />
 							<span>até</span>
-							<span>
-								{new Date(listItem.limiteDate).toLocaleDateString("pt-BR")}
-							</span>
+							<span>{dateFormater("BR", listItem.deadline)}</span>
 						</span>
 					)}
 				</div>
