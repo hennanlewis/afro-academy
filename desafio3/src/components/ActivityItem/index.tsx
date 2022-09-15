@@ -53,7 +53,7 @@ export const ActivityItem = (props: ActivityItemProps) => {
 			values = values.filter((item, index) => index != arrayPosition)
 
 			localTasks
-				.setItem("@AfroToDo:tasks", JSON.stringify([...values]))
+				.setItem("@AfroToDo:tasks", [...values])
 				.catch((error) => console.log(error))
 
 			return values

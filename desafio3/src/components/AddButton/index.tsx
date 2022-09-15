@@ -77,7 +77,7 @@ export const AddButton = (props: TaskStateProps) => {
 
 		if (listArray.length) {
 			localTasks
-				.setItem("@AfroToDo:tasks", JSON.stringify([...listArray]))
+				.setItem("@AfroToDo:tasks", [...listArray])
 				.then(() => console.log("Tarefas atualizadas com sucesso"))
 				.catch((error) => console.log(error))
 		}

@@ -1,7 +1,9 @@
+import { Task } from "../@types/types"
+
 export const localTasks = {
-	setItem: (keyName: string, keyValue: string) => {
+	setItem: (keyName: string, keyValue: Task[]) => {
 		return new Promise<void>((resolve) => {
-			resolve(localStorage.setItem(keyName, keyValue))
+			resolve(localStorage.setItem(keyName, JSON.stringify(keyValue)))
 		})
 	},
 
